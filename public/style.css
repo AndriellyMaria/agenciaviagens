@@ -114,4 +114,38 @@ button.Listar:hover {
     opacity: 0.9;
 }
 
+button.Editar {
+    display: block;
+    background-color: #6443f8;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    text-align: center;
+    font-size: 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 200px;
+    margin: 20px auto;
+}
 
+button.Editar:hover {
+    opacity: 0.9;
+}
+
+button.Excluir {
+    display: block;
+    background-color: #6443f8;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    text-align: center;
+    font-size: 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 200px;
+    margin: 20px auto;
+}
+
+button.Excluir:hover {
+    opacity: 0.9;
+}

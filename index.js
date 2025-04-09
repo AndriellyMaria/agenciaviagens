@@ -110,6 +110,54 @@ app.get('/listar', function(req,res){
     });
 });
 
+app.get('/excluir/:id', function(req,res){
+    const id = req.params.id; //obtém o ID da viagem a ser excluída da URL
+ 
+    connection.query('DELETE FROM viagens WHERE id = ?', [id], function(err, result){
+        if(err){
+            console.error('Erro ao excluir a viagem.');
+            res.status(500).send('Erro interno ao excluir as viagens.')
+            return;
+        }
+        console.log('Viagem deletada com sucesso!');
+        res.redirect('/listar');//redireciona para a listagem após a exclusão.
+    });
+});
+ 
+app.get('/editar/:id', function(req, res){
+    const id = req.params.id; // Obtém o ID da viagem a ser editada da URL
+    const select = "SELECT * FROM viagens WHERE id = ?";
+   
+    connection.query(select, [id], function(err, rows){
+        if(!err){
+            console.log("Viagem encontrada com sucesso!");
+            res.send(`
+                <html>
+                    <head>
+                        <title> Editar Viagem </title>
+                    </head>
+                    <body>
+                        <h1>Editar Viagem</h1>
+                        <form action="/editar/${id}" method="POST">
+                            <label for="destino">Destino:</label><br>
+                            <input type="text" name="destino" value="${rows[0].destino}"><br><br>
+                            <label for="data_viagem">Data da Viagem:</label><br>
+                            <input type="number" name="data_viagem" value="${rows[0].data_viagem}"><br><br>
+                            <label for="preco">Preço:</label><br>
+                            <input type="number" name="preco" value="${rows[0].preco}"><br><br>
+                            <label for="vagas">Vagas:</label><br>
+                            <input type="number" name="vagas" value="${rows[0].vagas}"><br><br>
+                            <input type="submit" value="Salvar">
+                        </form>
+                    </body>
+                </html>`);
+            } else {
+                console.log("Erro no relatório de estoque ", err);
+                res.send("Erro")
+            }
+        });
+    });
+
 // Inicia o servidor na porta 3000
 
 app.listen(3000, function(){ console.log("Servidor rodando na url http://localhost:3000")
