@@ -114,38 +114,27 @@ button.Listar:hover {
     opacity: 0.9;
 }
 
-button.Editar {
-    display: block;
-    background-color: #6443f8;
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    text-align: center;
-    font-size: 16px;
-    border-radius: 4px;
-    cursor: pointer;
-    width: 200px;
-    margin: 20px auto;
-}
-
-button.Editar:hover {
-    opacity: 0.9;
-}
-
+button.Editar,
 button.Excluir {
-    display: block;
-    background-color: #6443f8;
+    background-color: #6a0dad; /* Roxo intenso */
     color: white;
     border: none;
-    padding: 10px 15px;
-    text-align: center;
+    padding: 12px 20px; /* Maior altura e largura */
     font-size: 16px;
-    border-radius: 4px;
+    font-weight: bold;
+    border-radius: 6px;
     cursor: pointer;
-    width: 200px;
-    margin: 20px auto;
+    margin: 5px;
+    transition: 0.3s ease;
 }
 
+button.Editar:hover,
 button.Excluir:hover {
-    opacity: 0.9;
+    background-color: #7e2dd2; /* Roxo mais claro no hover */
+    transform: scale(1.05); /* Efeito de leve crescimento no hover */
+}
+
+td a {
+    display: inline-block;
+    margin-right: 10px;
 }

@@ -76,6 +76,7 @@ app.get('/listar', function(req,res){
                 <html>
                 <head>
                 <title> Relatório de viagens  </title>
+                <link rel="stylesheet" href="/style.css">
                 </head>
                 <body>
 
@@ -96,7 +97,13 @@ app.get('/listar', function(req,res){
                                 <td>${row.data_viagem}</td>
                                 <td>${row.preco}</td>
                                 <td>${row.vagas}</td>
+
+                                <td>
+                                    <a href="/editar/${row.id}"><button class="Editar">Editar</button></a>
+                                    <a href="/excluir/${row.id}"><button class="Excluir">Excluir</button></a>
+                                </td>
                             </tr>
+                    
                         `).join('')}
                     </table>
                     <a href="/"> Voltar </a>
@@ -135,14 +142,16 @@ app.get('/editar/:id', function(req, res){
                 <html>
                     <head>
                         <title> Editar Viagem </title>
+                
                     </head>
                     <body>
+                        <div class="edit-container">
                         <h1>Editar Viagem</h1>
                         <form action="/editar/${id}" method="POST">
                             <label for="destino">Destino:</label><br>
                             <input type="text" name="destino" value="${rows[0].destino}"><br><br>
                             <label for="data_viagem">Data da Viagem:</label><br>
-                            <input type="number" name="data_viagem" value="${rows[0].data_viagem}"><br><br>
+                            <input type="date" name="data_viagem" value="${rows[0].data_viagem}"><br><br>
                             <label for="preco">Preço:</label><br>
                             <input type="number" name="preco" value="${rows[0].preco}"><br><br>
                             <label for="vagas">Vagas:</label><br>
@@ -153,6 +162,26 @@ app.get('/editar/:id', function(req, res){
                 </html>`);
             } else {
                 console.log("Erro no relatório de estoque ", err);
+                res.send("Erro")
+            }
+        });
+    });
+
+    app.post('/editar/:id', function(req, res){
+        const id = req.params.id; // Obtém o ID da viagem a ser editada da URL
+        const destino = req.body.destino; 
+        const data_viagem = req.body.data_viagem; 
+        const preco = req.body.preco;
+        const vagas = req.body.vagas; 
+     
+        const update = "UPDATE viagens SET destino = ?, data_viagem = ?, preco = ?, vagas = ? WHERE id = ?";
+     
+        connection.query(update, [destino, data_viagem, preco, vagas, id], function(err, result){
+            if(!err){
+                console.log("Viagem editada com sucesso!");
+                res.redirect('/listar'); // Redireciona para a página de listagem após a edição
+            }else{
+                console.log("Erro ao editar a viagem ", err);
                 res.send("Erro")
             }
         });
